@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_app/main.dart';
-
+class LoginPage extends StatelessWidget {
+  const LoginPage({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
 class WidgetApp extends StatefulWidget {
   const WidgetApp({Key? key}) : super(key: key);
   @override
   State<WidgetApp> createState() => _WidgetAppState();}
 
 class _WidgetAppState extends State<WidgetApp>{
+  String dropdownvalue = 'Select College';
+
+  // List of items in our dropdown menu
+  var items = [
+    'Select College',
+    'ABC College',
+    'PQR College',
+    'XYZ College',
+  ];
   bool? isChecked = false;
   final myDecorateField = InputDecoration(
       enabledBorder: OutlineInputBorder(
@@ -70,17 +87,39 @@ class _WidgetAppState extends State<WidgetApp>{
                     ),
 
                     SizedBox(height: 20,),
-                     SizedBox(
-                       height: 55,
-                       child: TextField(
-                          decoration: myDecorateField.copyWith(
-                            hintText: 'Select College',
-                            hintStyle: TextStyle(color: Colors.black),
-                            suffixIcon: Icon(Icons.arrow_drop_down, color: Colors.black,),
-                            prefixIcon: Icon(Icons.school_rounded)
+                    Container(
+                      width: 350,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                          color: Colors.grey.shade700,
+                      ),
+                      ),
+                      child: Row(
+                        children: [
+                           SizedBox(width: 10,),
+                          Icon(Icons.school_rounded, color: Colors.grey.shade600,),
+                          SizedBox(width: 10,),
+                          DropdownButton(
+                            value: dropdownvalue,
+                            items: items.map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(items),
+                              );
+                            }).toList(),
+                            isExpanded: true,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownvalue = newValue!;
+                              });
+                            },
+
                           ),
-                        ),
-                     ),
+                        ],
+                      ),
+                    ),
 
                     SizedBox(height: 20,),
                     SizedBox(height: 50,
